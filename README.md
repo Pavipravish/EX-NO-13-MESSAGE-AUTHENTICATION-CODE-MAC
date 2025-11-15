@@ -25,11 +25,38 @@ To implement MESSAGE AUTHENTICATION CODE(MAC)
 5. Security: The security of the MAC relies on the secret key \( K \) and the strength of the hash function \( H \), ensuring that an attacker cannot forge a valid MAC without knowledge of the key.
 
 ## Program:
+#include <stdio.h>
+#include <string.h>
 
+void computeMAC(char *key, char *message, char *mac) {
+    unsigned long hash = 5381;
+    char combined[1000];
+    strcpy(combined, key);
+    strcat(combined, message);
 
+    for (int i = 0; combined[i] != '\0'; i++)
+        hash = ((hash << 5) + hash) + combined[i]; 
+
+    sprintf(mac, "%lx", hash);
+}
+
+int main() {
+    char key[100], message[500], mac[100];
+
+    printf("Enter Secret Key: ");
+    scanf("%s", key);
+    printf("Enter Message: ");
+    scanf("%s", message);
+
+    computeMAC(key, message, mac);
+
+    printf("\nGenerated MAC: %s\n", mac);
+    return 0;
+}
 
 ## Output:
 
+<img width="1684" height="1195" alt="image" src="https://github.com/user-attachments/assets/4433526b-b85a-4c5b-a667-2e1cd7de0ffa" />
 
 ## Result:
 The program is executed successfully.
